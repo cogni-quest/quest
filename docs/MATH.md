@@ -39,7 +39,7 @@ says five.
 | Increase / decrease by | ☐ | ☐ | ☐ | ☐ | ☐ |
 | Making a number (5 = 2 + □) | ✅ | ✅ | ✅ | ✅ | — |
 | Number sequences | ☐ | ☐ | ☐ | ☐ | ☐ |
-| Word problems | ☐ | ☐ | ☐ | ☐ | ☐ |
+| Word problems | ✅ | ✅ | — | — | — |
 | Logic | ☐ | ☐ | ☐ | ☐ | ☐ |
 | Geometry | ✖ | ✖ | ✖ | ✖ | ✖ |
 | Telling the time | ✖ | ✖ | ✖ | ✖ | ✖ |
@@ -330,14 +330,44 @@ addition's, unchanged.
 
 ---
 
+## Word problems
+
+A small story standing in for a sum — a name, a counted thing, an action —
+instead of `a + b` on the page. The child has to find the sum inside the
+sentence before working it out at all; that reading is the whole new
+difficulty, so the arithmetic behind it is kept to what the child already has.
+
+| Level | The sum inside the story | Example |
+|---|---|---|
+| 1 | within five | «У Пети было 3 яблока. Петя нашёл ещё 2 яблока. Сколько яблок стало у Пети?» |
+| 2 | within ten  | «Ваня купил 7 карандашей и ещё 3 карандаша. Сколько карандашей у Вани теперь?» |
+
+**Two rungs, borrowed whole from the arithmetic ladder.** Nothing about the sum
+is this row's own — it draws the same within-five and within-ten sums addition
+and subtraction already ask, in either operation. The story is the only thing
+that changes level to level, and it does so by staying easy: a sentence a
+first-grader can read is the ceiling here, not a rung to climb past.
+
+**A name, a thing and a shape of sentence, all three drawn independently of the
+sum.** A fixed story for a fixed sum would let a child who has heard it once
+recognise it rather than work it out — exactly the shortcut «no task can be
+answered without doing it» (above) exists to close. Everyday things only —
+food, school things, toys, small animals — nothing the story needs to explain
+before it can be asked.
+
+**The answer is one number**, the result of the sum the story hides, so the
+judging and the recognition grammar are addition's, unchanged.
+
+---
+
 ## What the unwritten rows would ask for
 
 Sorted by the shape of their answer, because that is what decides whether a row
 is merely unwritten or out of reach.
 
-- **A number** — how many more, increase/decrease, sequences, patterns, word
-  problems. The same answer shape every row above already uses, so these are
-  unwritten and nothing more.
+- **A number** — how many more, increase/decrease, sequences, patterns. The
+  same answer shape every row above already uses, so these are unwritten and
+  nothing more.
 - **A word off a named list** — comparing numbers was the first of these. Any
   row answered the same way asks for nothing new.
 - **Something pointed at rather than said** (✖) — geometry, telling the time,

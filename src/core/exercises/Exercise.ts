@@ -66,6 +66,20 @@ export type ExercisePrompt =
       readonly whole: number
       readonly parts: readonly [number | null, number | null]
     }
+  /**
+   * A word problem (задача) — a name, an item and a small story standing in
+   * for a sum, read as prose rather than drawn as an expression. `text` is
+   * already the whole sentence, assembled from the locale pack (word problems
+   * are the one prompt where the language, not just the numerals, is part of
+   * what is shown); `answer` is what the child says. No `bracket`, no second
+   * unknown — this rung's only new difficulty is finding the sum in the
+   * sentence at all.
+   */
+  | {
+      readonly kind: 'word-problem'
+      readonly text: string
+      readonly answer: number
+    }
 
 /**
  * One exercise type per subject, and every layer above written against it (A2).

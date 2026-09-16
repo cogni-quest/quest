@@ -182,24 +182,27 @@ export const ASKS: Record<number, Record<TaskKind, readonly string[]>> = {
   1: {
     addition: ['gobot', 'peasant'],
     subtraction: ['robber', 'skeleton'],
-    'comparing-numbers': ['forest-fairy', 'skeleton-archer'],
+    'comparing-numbers': ['forest-fairy'],
     'making-a-number': ['sea-devil'],
     // Its rungs are 2 and 3; a band-1 pool is [1], so there is nothing to give.
     'missing-number': [],
+    'word-problem': ['skeleton-archer'],
   },
   2: {
     addition: ['adult-gobot', 'wolf'],
     subtraction: ['hyena', 'imp', 'zombie'],
     'comparing-numbers': ['fire-spider', 'goblin', 'swamp-snake'],
-    'making-a-number': ['mage-slayer', 'pirate', 'priest'],
-    'missing-number': ['archer', 'snake', 'swordsman'],
+    'making-a-number': ['mage-slayer', 'pirate'],
+    'missing-number': ['archer', 'snake'],
+    'word-problem': ['priest', 'swordsman'],
   },
   3: {
     addition: ['griffin', 'guardsman'],
-    subtraction: ['bear', 'gorgul', 'inquisitor'],
+    subtraction: ['bear', 'gorgul'],
     'comparing-numbers': ['frost-spider', 'sky-guard'],
     'making-a-number': ['scout', 'white-wolf'],
-    'missing-number': ['ancient-bear', 'beholder', 'ghost-pirate'],
+    'missing-number': ['ancient-bear', 'beholder'],
+    'word-problem': ['inquisitor', 'ghost-pirate'],
   },
   4: {
     addition: ['knight', 'pyromancer'],
@@ -208,6 +211,8 @@ export const ASKS: Record<number, Record<TaskKind, readonly string[]>> = {
     'making-a-number': ['ancient-vampire-bat', 'royal-thorn'],
     // Rung 3 is in a band-4 pool, so it is asked here — at «до десяти», never higher.
     'missing-number': ['evil-beholder', 'royal-griffin'],
+    // Its rungs are 1 and 2; a band-4 pool is [3, 4], so there is nothing to give.
+    'word-problem': [],
   },
   5: {
     addition: ['archdemon', 'giant'],
@@ -216,6 +221,8 @@ export const ASKS: Record<number, Record<TaskKind, readonly string[]>> = {
     'making-a-number': ['black-dragon'],
     // Band-5 pool is [4, 5]; missing-number's rungs stop at 3.
     'missing-number': [],
+    // Band-5 pool is [4, 5]; word-problem's rungs stop at 2.
+    'word-problem': [],
   },
 }
 

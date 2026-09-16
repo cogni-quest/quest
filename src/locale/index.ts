@@ -1,4 +1,5 @@
 import { ru } from './ru'
+export type { WordProblemParts, WordProblemTemplate } from './ru'
 
 /**
  * The active text pack.

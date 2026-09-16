@@ -222,6 +222,11 @@ function questionText(exercise: Exercise): string {
       return t.teacher.compose(numberToWords(prompt.whole), numberToWords(known ?? 0))
     }
 
+    // Already a sentence — the locale pack assembled it, there is nothing
+    // left for this function to say differently.
+    case 'word-problem':
+      return prompt.text
+
     default:
       return assertNever(prompt, 'exercise prompt')
   }
@@ -261,6 +266,10 @@ function spokenAnswer(exercise: Exercise): string | null {
       return known === undefined ? null : numberToWords(prompt.whole - known)
     }
 
+    // The prompt already carries what the story works out to.
+    case 'word-problem':
+      return numberToWords(prompt.answer)
+
     default:
       return assertNever(prompt, 'exercise prompt')
   }
@@ -279,10 +288,11 @@ function draftFor(exercise: Exercise): Draft {
 
   switch (prompt.kind) {
     // Answered with a number — the sum of a chain, the operand hidden in an
-    // equation, or the missing part of a bond.
+    // equation, the missing part of a bond, or what a story works out to.
     case 'arithmetic':
     case 'equation':
     case 'composition':
+    case 'word-problem':
       return { kind: 'number', digits: '' }
 
     case 'comparison':

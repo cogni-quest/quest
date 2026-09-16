@@ -11,6 +11,32 @@
  * the recogniser grammar is built from (T4, T16) and what the teacher reads
  * out loud (T12). Both are language, not logic.
  */
+
+/**
+ * What a `wordProblems.addition`/`subtraction` template is handed to write its
+ * sentence — already resolved: the item's forms picked for `a` and `b`, the
+ * verb picked for the drawn name's gender. A template only assembles words; it
+ * never reaches for a gender or a count itself.
+ */
+export interface WordProblemParts {
+  readonly nominative: string
+  readonly genitive: string
+  readonly verb: string
+  readonly a: number
+  readonly b: number
+  readonly formA: string
+  readonly formB: string
+  readonly formMany: string
+}
+
+/** A word-problem sentence, and which grammatical slot each number sits in. */
+export interface WordProblemTemplate {
+  readonly verb: { readonly m: string; readonly f: string }
+  readonly aCase: 'subject' | 'object'
+  readonly bCase: 'subject' | 'object'
+  readonly text: (parts: WordProblemParts) => string
+}
+
 export const ru = {
   code: 'ru',
 
@@ -285,6 +311,125 @@ export const ru = {
    */
   compose: {
     and: 'И',
+  },
+
+  /**
+   * Word problems (задачи) — content for the `word-problem` row (see
+   * docs/MATH.md for the methodology this bank serves).
+   *
+   * A story is a name, an item and a template drawn independently, so the same
+   * numbers read differently every time — the point of the row is reading
+   * comprehension, and a fixed pairing would let the child recognise the story
+   * instead of the sum.
+   */
+  wordProblems: {
+    /**
+     * Each name carries its own gender, so a template's verb can be looked up
+     * rather than conjugated — no morphology, just `verb[name.gender]`. «Лев»
+     * is the one irregular genitive: Лев → Льва, a fleeting vowel.
+     */
+    names: [
+      { nominative: 'Петя', genitive: 'Пети', gender: 'm' },
+      { nominative: 'Ваня', genitive: 'Вани', gender: 'm' },
+      { nominative: 'Коля', genitive: 'Коли', gender: 'm' },
+      { nominative: 'Лев', genitive: 'Льва', gender: 'm' },
+      { nominative: 'Дима', genitive: 'Димы', gender: 'm' },
+      { nominative: 'Оля', genitive: 'Оли', gender: 'f' },
+      { nominative: 'Маша', genitive: 'Маши', gender: 'f' },
+      { nominative: 'Катя', genitive: 'Кати', gender: 'f' },
+      { nominative: 'Нина', genitive: 'Нины', gender: 'f' },
+      { nominative: 'Наташа', genitive: 'Наташи', gender: 'f' },
+    ] as readonly { readonly nominative: string; readonly genitive: string; readonly gender: 'm' | 'f' }[],
+
+    /**
+     * Four forms, not three, and hand-authored rather than derived from a
+     * rule — a rule can't be trusted to know that «котёнок» pluralises to
+     * «котят» rather than «котёнков», or that a feminine noun changes shape
+     * between «было конфета» and «съел конфету».
+     *
+     * `one`/`few`/`many` are the ordinary counting forms — 1, 2–4, 5+ — for a
+     * counted item standing where «было» puts it. `objectOne` is `one` said as
+     * the object of a verb instead («съел конфету», not «съел конфета»);
+     * omitted where that is the same word, which holds for every neuter item
+     * and every masculine one that is not alive. `animate` marks the four
+     * living things: at 2–4 as a verb's object a living thing takes `many`
+     * («поймал 2 котят»), where a stone or a sticker still takes `few`
+     * («купил 2 наклейки») — the one place count and case interact, so the
+     * generator asks about it explicitly rather than guessing from the word.
+     *
+     * Food, school things, toys, small animals — four themes read together
+     * rather than kept apart, since nothing in the generator branches on one.
+     */
+    items: [
+      { one: 'яблоко', few: 'яблока', many: 'яблок' },
+      { one: 'груша', few: 'груши', many: 'груш', objectOne: 'грушу' },
+      { one: 'конфета', few: 'конфеты', many: 'конфет', objectOne: 'конфету' },
+      { one: 'банан', few: 'банана', many: 'бананов' },
+      { one: 'карандаш', few: 'карандаша', many: 'карандашей' },
+      { one: 'ручка', few: 'ручки', many: 'ручек', objectOne: 'ручку' },
+      { one: 'тетрадь', few: 'тетради', many: 'тетрадей' },
+      { one: 'наклейка', few: 'наклейки', many: 'наклеек', objectOne: 'наклейку' },
+      { one: 'машинка', few: 'машинки', many: 'машинок', objectOne: 'машинку' },
+      { one: 'мячик', few: 'мячика', many: 'мячиков' },
+      { one: 'кубик', few: 'кубика', many: 'кубиков' },
+      { one: 'шарик', few: 'шарика', many: 'шариков' },
+      { one: 'рыбка', few: 'рыбки', many: 'рыбок', objectOne: 'рыбку', animate: true },
+      { one: 'бабочка', few: 'бабочки', many: 'бабочек', objectOne: 'бабочку', animate: true },
+      { one: 'жук', few: 'жука', many: 'жуков', objectOne: 'жука', animate: true },
+      { one: 'котёнок', few: 'котёнка', many: 'котят', objectOne: 'котёнка', animate: true },
+    ] as readonly {
+      readonly one: string
+      readonly few: string
+      readonly many: string
+      readonly objectOne?: string
+      readonly animate?: boolean
+    }[],
+
+    /**
+     * Two phrasings each for «стало» and «осталось», so the row does not
+     * settle into one memorised sentence. `verb` is picked by the drawn
+     * name's gender before `text` ever runs — `text` only assembles words it
+     * is handed, it does not know a name has a gender.
+     *
+     * `aCase`/`bCase` say which grammatical slot each number's item sits in —
+     * subject of «было», or object of the action verb — so the generator
+     * knows which of an item's forms belongs there. It is the sentence's own
+     * shape being declared, not arithmetic, which is why it lives beside the
+     * words rather than in code.
+     */
+    addition: [
+      {
+        verb: { m: 'нашёл', f: 'нашла' },
+        aCase: 'subject',
+        bCase: 'object',
+        text: (p: WordProblemParts) =>
+          `У ${p.genitive} было ${p.a} ${p.formA}. ${p.nominative} ${p.verb} ещё ${p.b} ${p.formB}. Сколько ${p.formMany} стало у ${p.genitive}?`,
+      },
+      {
+        verb: { m: 'купил', f: 'купила' },
+        aCase: 'object',
+        bCase: 'object',
+        text: (p: WordProblemParts) =>
+          `${p.nominative} ${p.verb} ${p.a} ${p.formA} и ещё ${p.b} ${p.formB}. Сколько ${p.formMany} у ${p.genitive} теперь?`,
+      },
+    ] as readonly WordProblemTemplate[],
+
+    subtraction: [
+      {
+        verb: { m: 'отдал', f: 'отдала' },
+        aCase: 'subject',
+        bCase: 'object',
+        text: (p: WordProblemParts) =>
+          `У ${p.genitive} было ${p.a} ${p.formA}. ${p.nominative} ${p.verb} ${p.b} ${p.formB} другу. Сколько ${p.formMany} осталось у ${p.genitive}?`,
+      },
+      {
+        verb: { m: 'съел', f: 'съела' },
+        aCase: 'subject',
+        bCase: 'object',
+        text: (p: WordProblemParts) =>
+          `У ${p.genitive} было ${p.a} ${p.formA}. ${p.nominative} ${p.verb} ${p.b} ${p.formB}. Сколько ${p.formMany} осталось у ${p.genitive}?`,
+      },
+    ] as readonly WordProblemTemplate[],
   },
 
   /**

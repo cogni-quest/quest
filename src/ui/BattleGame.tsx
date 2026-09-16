@@ -674,6 +674,10 @@ function Expression({ exercise }: { exercise: Exercise }) {
       )
     }
 
+    // A sentence, not an expression — read at reading size, not digit size.
+    case 'word-problem':
+      return <p className="story">{prompt.text}</p>
+
     default:
       return assertNever(prompt, 'exercise prompt')
   }

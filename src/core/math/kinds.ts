@@ -8,6 +8,7 @@ import { createCompositionExercise, MAKING_LEVELS } from './composition'
 import { createEquationExercise, MISSING_LEVELS } from './equations'
 import { generateProblem, toExercise } from './generator'
 import { MATH_LEVELS } from './levels'
+import { createWordProblemExercise, WORD_PROBLEM_LEVELS } from './wordProblems'
 
 /**
  * A kind of task, named for the row of the grid it comes from
@@ -17,17 +18,16 @@ import { MATH_LEVELS } from './levels'
  * covering three of these and telling a reader nothing, and an opponent that
  * asks only subtraction has no way to say so through a grouping.
  *
- * The rows still to be written — sequences, «how many more», word problems —
- * join this union as they land, and every switch over it stops compiling until
- * it says what to do with them.
+ * The rows still to be written — sequences, «how many more» — join this union
+ * as they land, and every switch over it stops compiling until it says what to
+ * do with them.
  *
- * **All the rows but one are asked; `addition-subtraction` is still parked.**
- * The parked one is written and still under test — its generator, its rules and
- * its test file are untouched — but not drawn. Parked, not deleted: a row is
- * commented out in exactly three places, this union, `RUNGS` and the switch at
- * the foot of the file, plus its import at the top. Uncomment those and the row
- * is playable again, along with whatever in game/monsters.ts offers it to an
- * opponent.
+ * **One row is parked: `addition-subtraction`.** Written and still under test
+ * — generator, rules and test file untouched — but not drawn. Parked, not
+ * deleted: a row is commented out in exactly three places, this union, `RUNGS`
+ * and the switch at the foot of the file, plus its import at the top.
+ * Uncomment those and the row is playable again, along with whatever in
+ * game/monsters.ts offers it to an opponent.
  *
  * Subtraction needed no import of its own, which is why it came back first: it
  * shares `generateProblem` with addition and passes it a different operation.
@@ -39,6 +39,7 @@ export type TaskKind =
   | 'comparing-numbers'
   | 'making-a-number'
   | 'missing-number'
+  | 'word-problem'
 // | 'addition-subtraction'
 
 /**
@@ -60,6 +61,10 @@ const RUNGS: Record<TaskKind, readonly number[]> = {
   // Two rungs, both under ten (see equations.ts): a band that reaches neither
   // simply never draws it.
   'missing-number': MISSING_LEVELS,
+  // Two rungs, within five and within ten (see wordProblems.ts) — the same
+  // pair equations.ts stops one short of, because a bond has no operand to
+  // hide at level 1 but a story reads fine at any size.
+  'word-problem': WORD_PROBLEM_LEVELS,
   // 'addition-subtraction': MATH_LEVELS,
 }
 
@@ -100,6 +105,9 @@ export function createMathExercise(kind: TaskKind, levelId: number, random: Rand
 
     case 'missing-number':
       return createEquationExercise(levelId, random)
+
+    case 'word-problem':
+      return createWordProblemExercise(levelId, random)
 
     // case 'addition-subtraction':
     //   return createChainExercise(levelId, random)

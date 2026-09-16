@@ -834,6 +834,21 @@ img.avatar {
   font-size: clamp(2.4rem, 9vw, 5.5rem);
 }
 
+/**
+ * A word problem — a sentence, not an expression, so it is read at reading
+ * size rather than at the digit size the rest of the row uses. `ch`-based, not
+ * a viewport unit: a story's length varies with the name and item drawn, and a
+ * measure that tracks the font rather than the screen is what keeps a long
+ * one from running edge to edge.
+ */
+.story {
+  max-width: 32ch;
+  font-size: clamp(1.3rem, 4vw, 1.9rem);
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: center;
+}
+
 .expression__op {
   color: var(--muted);
 }
