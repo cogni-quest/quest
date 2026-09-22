@@ -42,7 +42,7 @@ npm run build      # typecheck, then build
 ## Deployment
 
 Every push to `main` builds and publishes to GitHub Pages —
-**https://dr-o-ne.github.io/cogniquest/** — through
+**https://cogni-quest.github.io/cogniquest/** — through
 `.github/workflows/deploy.yml`.
 
 The workflow fetches the Vosk model itself, so the published site carries all
