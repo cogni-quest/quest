@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { onShopSpentChange, readShopSpent } from '@/adapters/storage'
 import { t } from '@/locale'
 
 /**
@@ -21,12 +22,22 @@ export function TopBar({
   onBack,
 }: {
   name: string
-  /** Coins banked from battles won (arena or quest). Shown top-right. */
+  /**
+   * Coins banked from battles won (arena or quest), all of them ever. What is
+   * shown top-right is this less what the shop has spent.
+   */
   gold: number
   onReset: () => void
   onBack?: () => void
 }) {
   const [confirming, setConfirming] = useState(false)
+
+  // What the shop has taken out of it. Read here rather than threaded through
+  // useBattle, because this corner is the only place that shows the balance,
+  // and the shop writes it on its own schedule, not the battle's.
+  const [spent, setSpent] = useState(readShopSpent)
+  useEffect(() => onShopSpentChange(() => setSpent(readShopSpent())), [])
+  const left = Math.max(0, gold - spent)
 
   return (
     <header className="topbar">
@@ -67,12 +78,12 @@ export function TopBar({
         </span>
         <span className="topbar__name">{name}</span>
 
-        {/* The gold every opponent beaten was worth, arena or quest alike —
-            the outermost thing in the corner, since it is the one number here
-            that keeps changing. */}
-        <span className="topbar__gold" aria-label={t.topbar.gold(gold)}>
+        {/* The gold every opponent beaten was worth, arena or quest alike, less
+            what was spent in the shop — the outermost thing in the corner,
+            since it is the one number here that keeps changing. */}
+        <span className="topbar__gold" aria-label={t.topbar.gold(left)}>
           <span aria-hidden="true">🪙</span>
-          <span className="topbar__gold-amount">{gold}</span>
+          <span className="topbar__gold-amount">{left}</span>
         </span>
       </div>
     </header>
