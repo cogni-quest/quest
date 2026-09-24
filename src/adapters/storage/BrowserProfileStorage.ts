@@ -9,7 +9,7 @@ import type { ProfileStorage } from '@/core/ports'
  * crashing.
  */
 export class BrowserProfileStorage implements ProfileStorage {
-  constructor(private readonly prefix = 'cogniquest:') {}
+  constructor(private readonly prefix = 'quest:') {}
 
   async load<T>(key: string): Promise<T | null> {
     try {

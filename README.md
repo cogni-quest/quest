@@ -1,4 +1,4 @@
-# CogniQuest
+# Quest
 
 A learning game for a 6–7 year old: **math** (addition and subtraction up to
 100) and **reading by syllables**. Answers are given **out loud** — the
@@ -42,12 +42,12 @@ npm run build      # typecheck, then build
 ## Deployment
 
 Every push to `main` builds and publishes to GitHub Pages —
-**https://cogni-quest.github.io/cogniquest/** — through
+**https://cogni-quest.github.io/quest/** — through
 `.github/workflows/deploy.yml`.
 
 The workflow fetches the Vosk model itself, so the published site carries all
 44 MB of it: a first visit downloads some 50 MB and the browser caches it from
-then on. The site is served from `/cogniquest/`, not from a domain root, so
+then on. The site is served from `/quest/`, not from a domain root, so
 anything resolved by path at runtime has to go through `publicUrl()` in
 `src/assets.ts` — an absolute `/models/…` would escape to the domain root.
 

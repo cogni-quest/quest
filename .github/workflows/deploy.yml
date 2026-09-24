@@ -39,7 +39,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          BASE_PATH: /cogniquest/
+          BASE_PATH: /quest/
 
       - uses: actions/upload-pages-artifact@v3
         with:
