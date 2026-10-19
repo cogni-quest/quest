@@ -205,10 +205,10 @@ export const ASKS: Record<number, Record<TaskKind, readonly string[]>> = {
     'word-problem': ['inquisitor', 'ghost-pirate'],
   },
   4: {
-    addition: ['knight', 'pyromancer'],
+    addition: ['pyromancer', 'royal-thorn'],
     subtraction: ['archmage', 'cavalryman'],
     'comparing-numbers': ['assassin', 'paladin'],
-    'making-a-number': ['ancient-vampire-bat', 'royal-thorn'],
+    'making-a-number': ['ancient-vampire-bat', 'knight'],
     // Rung 3 is in a band-4 pool, so it is asked here — at «до десяти», never higher.
     'missing-number': ['evil-beholder', 'royal-griffin'],
     // Its rungs are 1 and 2; a band-4 pool is [3, 4], so there is nothing to give.
@@ -216,9 +216,9 @@ export const ASKS: Record<number, Record<TaskKind, readonly string[]>> = {
   },
   5: {
     addition: ['archdemon', 'giant'],
-    subtraction: ['emerald-dragon'],
+    subtraction: ['black-dragon'],
     'comparing-numbers': ['lava-golem'],
-    'making-a-number': ['black-dragon'],
+    'making-a-number': ['emerald-dragon'],
     // Band-5 pool is [4, 5]; missing-number's rungs stop at 3.
     'missing-number': [],
     // Band-5 pool is [4, 5]; word-problem's rungs stop at 2.
